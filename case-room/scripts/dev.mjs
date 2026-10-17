@@ -1,0 +1,5 @@
+import http from 'node:http';
+import {readFile} from 'node:fs/promises';
+const source=await readFile(new URL('../dist/server/index.js',import.meta.url),'utf8');
+const {default:worker}=await import('data:text/javascript;base64,'+Buffer.from(source).toString('base64'));
+const server=http.createServer(async(req,res)=>{try{const chunks=[];for await(const chunk of req)chunks.push(chunk);const headers=new Headers(req.headers);headers.set('oai-authenticated-user-id','local-owner');const request=new Request('http://127.0.0.1:3100'+req.url,{method:req.method,headers,...(!['GET','HEAD'].includes(req.method)?{body:Buffer.concat(chunks)}:{})});const response=await worker.fetch(request,{OPENAI_API_KEY:process.env.OPENAI_API_KEY,OPENAI_MODEL:process.env.OPENAI_MODEL},{});res.writeHead(response.status,Object.fromEntries(response.headers));res.end(Buffer.from(await response.arrayBuffer()))}catch{res.writeHead(500);res.end('Local server error')}});server.listen(3100,'127.0.0.1',()=>console.log('Local: http://127.0.0.1:3100'));

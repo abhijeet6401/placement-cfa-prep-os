@@ -1,0 +1,12 @@
+{
+  "name": "case-room",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build:pages": "node scripts/build-pages.mjs",
+    "build": "node scripts/build.mjs",
+    "validate": "node scripts/validate-artifact.mjs",
+    "test": "node --test tests/server.test.mjs",
+    "dev": "node scripts/dev.mjs"
+  }
+}
