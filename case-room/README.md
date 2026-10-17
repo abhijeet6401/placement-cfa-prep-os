@@ -31,6 +31,10 @@ Use secure key setup to provision `OPENAI_API_KEY`; `.env.local` is ignored by G
 
 ## Source and deployment
 
+### GitHub Pages
+
+Run `node scripts/build-pages.mjs` to create `pages/index.html`. Publish the contents of `pages/` at the root of the `gh-pages` branch, then select **Settings → Pages → Deploy from a branch → gh-pages → / (root)**. The Pages edition explicitly runs in guided practice mode: GitHub Pages cannot execute the secure AI Worker. Never put an API key into frontend code or the Pages branch.
+
 `src/` contains the frontend; `worker/index.js` contains the server routes and interview instructions. `scripts/build.mjs` creates one self-contained `dist/server/index.js` and copies the hosting manifest. `dist/` is generated. Publish using the Sites source workflow and the existing project ID in `.openai/hosting.json`.
 
 ## Data handling

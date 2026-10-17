@@ -1,0 +1,10 @@
+import {readFile,mkdir,writeFile} from 'node:fs/promises';
+const root=new URL('../',import.meta.url);
+let page=await readFile(new URL('src/index.html',root),'utf8');
+const style=await readFile(new URL('src/style.css',root),'utf8');
+const client=await readFile(new URL('src/client.js',root),'utf8');
+page=page.replace('href="/"','href="./"').replace('/*STYLE*/',()=>style).replace('/*CLIENT*/',()=> 'window.CASE_ROOM_STATIC=true;\n'+client);
+await mkdir(new URL('pages/',root),{recursive:true});
+await writeFile(new URL('pages/index.html',root),page);
+await writeFile(new URL('pages/.nojekyll',root),'');
+console.log('Built GitHub Pages frontend. No API key or server code included.');

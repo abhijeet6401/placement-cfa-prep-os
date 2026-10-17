@@ -4,3 +4,4 @@ site.tar.gz
 !.env.example
 .key-setup/
 .sites-runtime/
+pages/
