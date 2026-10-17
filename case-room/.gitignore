@@ -1,0 +1,6 @@
+dist/
+site.tar.gz
+.env*
+!.env.example
+.key-setup/
+.sites-runtime/
